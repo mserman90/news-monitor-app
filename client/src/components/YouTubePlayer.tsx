@@ -52,6 +52,7 @@ export function YouTubePlayer({
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YouTubePlayerInstance | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   // Load YouTube IFrame API
   useEffect(() => {
@@ -92,6 +93,7 @@ export function YouTubePlayer({
         },
         events: {
           onReady: () => {
+            setIsPlayerReady(true);
             if (muted && playerRef.current) {
               playerRef.current.mute();
             }
@@ -108,22 +110,27 @@ export function YouTubePlayer({
 
     return () => {
       if (playerRef.current) {
-        playerRef.current.destroy();
+        try {
+          playerRef.current.destroy();
+        } catch (e) {
+          console.error('Error destroying player:', e);
+        }
         playerRef.current = null;
+        setIsPlayerReady(false);
       }
     };
   }, [isReady, videoId, muted, autoplay, onReady, onError]);
 
-  // Update video when videoId changes
+  // Update video when videoId changes (only after player is ready)
   useEffect(() => {
-    if (playerRef.current && videoId) {
+    if (playerRef.current && videoId && isPlayerReady) {
       try {
         playerRef.current.loadVideoById(videoId);
       } catch (error) {
         console.error('Failed to load video:', error);
       }
     }
-  }, [videoId]);
+  }, [videoId, isPlayerReady]);
 
   return (
     <div
@@ -149,7 +156,7 @@ export function YouTubePlayer({
         className="w-full h-full"
         title={title}
       />
-      {!isReady && (
+      {!isPlayerReady && (
         <div className="absolute inset-0 flex items-center justify-center bg-card/90 backdrop-blur-sm">
           <div className="text-center">
             <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3" />
