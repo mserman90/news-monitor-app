@@ -87,3 +87,57 @@ export const REGION_LABELS: Record<WebcamRegion, string> = {
   asia: 'Asia-Pacific',
   space: 'Space',
 };
+
+// Custom channels storage key
+export const CUSTOM_CHANNELS_STORAGE_KEY = 'custom_live_channels';
+
+// Get all channels (default + custom)
+export function getAllLiveChannels(): LiveChannel[] {
+  const customChannels = getCustomChannels();
+  return [...LIVE_NEWS_CHANNELS, ...customChannels];
+}
+
+// Get custom channels from localStorage
+export function getCustomChannels(): LiveChannel[] {
+  try {
+    const stored = localStorage.getItem(CUSTOM_CHANNELS_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Failed to load custom channels:', error);
+    return [];
+  }
+}
+
+// Add custom channel
+export function addCustomChannel(channel: LiveChannel): boolean {
+  try {
+    const custom = getCustomChannels();
+    if (custom.some(c => c.id === channel.id)) {
+      return false;
+    }
+    custom.push(channel);
+    localStorage.setItem(CUSTOM_CHANNELS_STORAGE_KEY, JSON.stringify(custom));
+    return true;
+  } catch (error) {
+    console.error('Failed to add custom channel:', error);
+    return false;
+  }
+}
+
+// Remove custom channel
+export function removeCustomChannel(channelId: string): boolean {
+  try {
+    const custom = getCustomChannels();
+    const filtered = custom.filter(c => c.id !== channelId);
+    localStorage.setItem(CUSTOM_CHANNELS_STORAGE_KEY, JSON.stringify(filtered));
+    return true;
+  } catch (error) {
+    console.error('Failed to remove custom channel:', error);
+    return false;
+  }
+}
+
+// Check if channel is custom
+export function isCustomChannel(channelId: string): boolean {
+  return getCustomChannels().some(c => c.id === channelId);
+}

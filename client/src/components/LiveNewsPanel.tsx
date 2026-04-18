@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LIVE_NEWS_CHANNELS, LiveChannel } from '@/lib/channels';
+import { getAllLiveChannels, LiveChannel } from '@/lib/channels';
 import { YouTubePlayer } from './YouTubePlayer';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
@@ -20,9 +20,16 @@ interface LiveNewsPanelProps {
 }
 
 export function LiveNewsPanel({ onChannelChange }: LiveNewsPanelProps) {
-  const [selectedChannel, setSelectedChannel] = useState<LiveChannel>(LIVE_NEWS_CHANNELS[0]!);
+  const [allChannels, setAllChannels] = useState<LiveChannel[]>([]);
+  const [selectedChannel, setSelectedChannel] = useState<LiveChannel | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [carouselStart, setCarouselStart] = useState(0);
+
+  useEffect(() => {
+    const channels = getAllLiveChannels();
+    setAllChannels(channels);
+    setSelectedChannel(channels[0] || null);
+  }, []);
 
   const handleChannelSelect = (channel: LiveChannel) => {
     setSelectedChannel(channel);
@@ -51,9 +58,9 @@ export function LiveNewsPanel({ onChannelChange }: LiveNewsPanelProps) {
     return () => document.removeEventListener('keydown', handleEscapeKey);
   }, [isFullscreen]);
 
-  const visibleChannels = LIVE_NEWS_CHANNELS.slice(carouselStart, carouselStart + 5);
+  const visibleChannels = allChannels.slice(carouselStart, carouselStart + 5);
   const canScrollLeft = carouselStart > 0;
-  const canScrollRight = carouselStart + 5 < LIVE_NEWS_CHANNELS.length;
+  const canScrollRight = carouselStart + 5 < allChannels.length;
 
   return (
     <div
@@ -73,7 +80,7 @@ export function LiveNewsPanel({ onChannelChange }: LiveNewsPanelProps) {
               <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
               <span className="text-xs font-bold text-red-500 tracking-widest">LIVE</span>
             </div>
-            <h2 className="text-lg font-bold text-foreground truncate">{selectedChannel.name}</h2>
+            <h2 className="text-lg font-bold text-foreground truncate">{selectedChannel?.name || 'Loading...'}</h2>
           </div>
           <Button
             variant="ghost"
@@ -87,13 +94,15 @@ export function LiveNewsPanel({ onChannelChange }: LiveNewsPanelProps) {
 
         {/* Main Player */}
         <div className={`flex-1 mb-4 min-h-0 ${isFullscreen ? 'mb-6' : ''}`}>
-          <YouTubePlayer
-            videoId={selectedChannel.fallbackVideoId || ''}
-            title={selectedChannel.name}
-            muted={true}
-            autoplay={true}
-            className="w-full h-full"
-          />
+          {selectedChannel && (
+            <YouTubePlayer
+              videoId={selectedChannel.fallbackVideoId || ''}
+              title={selectedChannel.name}
+              muted={true}
+              autoplay={true}
+              className="w-full h-full"
+            />
+          )}
         </div>
 
         {/* Channel Carousel */}
@@ -114,7 +123,7 @@ export function LiveNewsPanel({ onChannelChange }: LiveNewsPanelProps) {
                 key={channel.id}
                 onClick={() => handleChannelSelect(channel)}
                 className={`px-3 py-2 rounded text-sm font-medium whitespace-nowrap transition-all duration-300 flex-shrink-0 ${
-                  selectedChannel.id === channel.id
+                  selectedChannel?.id === channel.id
                     ? 'bg-primary text-primary-foreground border-2 border-primary'
                     : 'bg-card text-foreground border-2 border-border hover:border-primary'
                 }`}
@@ -127,7 +136,7 @@ export function LiveNewsPanel({ onChannelChange }: LiveNewsPanelProps) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCarouselStart(Math.min(LIVE_NEWS_CHANNELS.length - 5, carouselStart + 1))}
+            onClick={() => setCarouselStart(Math.min(allChannels.length - 5, carouselStart + 1))}
             disabled={!canScrollRight}
             className="border-border hover:border-primary hover:text-primary flex-shrink-0"
           >

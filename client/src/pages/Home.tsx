@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { LiveNewsPanel } from '@/components/LiveNewsPanel';
 import { LiveWebcamsPanel } from '@/components/LiveWebcamsPanel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Globe, Tv } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Globe, Tv, Settings as SettingsIcon } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 /**
  * Home Page - Main Dashboard
@@ -17,6 +19,7 @@ import { Globe, Tv } from 'lucide-react';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('news');
+  const [, setLocation] = useLocation();
 
   return (
     <div
@@ -33,14 +36,24 @@ export default function Home() {
       {/* Header */}
       <header className="border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur-sm">
         <div className="w-full px-4 py-4 md:px-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
-              <Globe className="w-6 h-6 text-primary-foreground" />
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
+                <Globe className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div className="min-w-0">
+                <h1 className="text-xl md:text-2xl font-bold text-foreground truncate">News & Webcam Monitor</h1>
+                <p className="text-xs md:text-sm text-muted-foreground truncate">Real-time global news broadcasts and live webcams</p>
+              </div>
             </div>
-            <div className="min-w-0">
-              <h1 className="text-xl md:text-2xl font-bold text-foreground truncate">News & Webcam Monitor</h1>
-              <p className="text-xs md:text-sm text-muted-foreground truncate">Real-time global news broadcasts and live webcams</p>
-            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLocation('/settings')}
+              className="border-border hover:border-primary hover:text-primary flex-shrink-0"
+            >
+              <SettingsIcon className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </header>
