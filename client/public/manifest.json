@@ -1,0 +1,90 @@
+{
+  "name": "News & Webcam Monitor",
+  "short_name": "News Monitor",
+  "description": "Real-time global news broadcasts and live webcams from around the world",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0f1419",
+  "background_color": "#0f1419",
+  "categories": ["news", "utilities"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%230f1419' width='540' height='720'/><text x='50%' y='50%' font-size='48' fill='%2300d9ff' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='bold'>News Monitor</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect fill='%230f1419' width='1280' height='720'/><text x='50%' y='50%' font-size='72' fill='%2300d9ff' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='bold'>News & Webcam Monitor</text></svg>",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300d9ff;stop-opacity:1' /><stop offset='100%' style='stop-color:%23ff6b35;stop-opacity:1' /></linearGradient></defs><rect fill='url(%23grad)' width='192' height='192' rx='45'/><text x='96' y='96' font-size='120' fill='white' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='bold'>🌐</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300d9ff;stop-opacity:1' /><stop offset='100%' style='stop-color:%23ff6b35;stop-opacity:1' /></linearGradient></defs><rect fill='url(%23grad)' width='192' height='192' rx='45'/><text x='96' y='96' font-size='120' fill='white' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='bold'>🌐</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300d9ff;stop-opacity:1' /><stop offset='100%' style='stop-color:%23ff6b35;stop-opacity:1' /></linearGradient></defs><rect fill='url(%23grad)' width='512' height='512' rx='120'/><text x='256' y='256' font-size='320' fill='white' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='bold'>🌐</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2300d9ff;stop-opacity:1' /><stop offset='100%' style='stop-color:%23ff6b35;stop-opacity:1' /></linearGradient></defs><rect fill='url(%23grad)' width='512' height='512' rx='120'/><text x='256' y='256' font-size='320' fill='white' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='bold'>🌐</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Live News",
+      "short_name": "News",
+      "description": "Watch live news broadcasts",
+      "url": "/?tab=news",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%2300d9ff' width='96' height='96' rx='20'/><text x='48' y='48' font-size='60' fill='white' text-anchor='middle' dominant-baseline='middle'>📺</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Live Webcams",
+      "short_name": "Webcams",
+      "description": "View live webcam feeds",
+      "url": "/?tab=webcams",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23ff6b35' width='96' height='96' rx='20'/><text x='48' y='48' font-size='60' fill='white' text-anchor='middle' dominant-baseline='middle'>🎥</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

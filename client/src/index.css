@@ -112,13 +112,38 @@
   --sidebar-border: #2d3748;
   --sidebar-ring: #00d9ff;
 }
-
 @layer base {
+  html {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+  }
+  
+  @media (max-width: 640px) {
+    input, textarea, select {
+      font-size: 16px;
+    }
+  }
+  
+  @supports (padding: max(0px)) {
+    body {
+      padding-left: max(0px, env(safe-area-inset-left));
+      padding-right: max(0px, env(safe-area-inset-right));
+    }
+  }
+  
+  body {
     font-family: 'Inter', sans-serif;
   }
   h1, h2, h3 {
@@ -183,19 +208,46 @@
     min-height: 0;
     min-width: 0;
   }
+  
+  button, a, input[type="checkbox"], input[type="radio"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  @media (max-width: 640px) {
+    body, html {
+      overflow-x: hidden;
+      width: 100vw;
+    }
+    
+    .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+  }
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
+    }
+  }
+  
+  @media (max-height: 500px) and (orientation: landscape) {
+    header {
+      padding: 0.5rem 1rem;
+    }
+    
+    main {
+      padding: 0.5rem 1rem;
     }
   }
 }
